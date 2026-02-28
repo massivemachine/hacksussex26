@@ -1,4 +1,5 @@
 from fr24sdk.client import Client
+from datetime import datetime, timezone, timedelta
 
 # TEST API KEY -- Uses 0 api key credits to query but returns false data
 api_token = "019ca545-ae71-731f-be21-82a9fed0ad69|o95d27QrcstvarZKoG3xJsgmoSNCWSOXMkF2nLcve2862b39"
@@ -7,10 +8,12 @@ api_token = "019ca545-ae71-731f-be21-82a9fed0ad69|o95d27QrcstvarZKoG3xJsgmoSNCWS
 #api_token = "019ca548-a0fe-7011-b1b5-ba68aeddeee7|JN5YPrGT4pHFAQsMDqRZeNssRPXENsgg4JSCH1s8e62ba956"
 
 with Client(api_token=api_token) as client:
+
+    now_utc = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%S')
+
     try:
-        # bounding box around London Gatwick
-        bounds = "51.1931,51.1031,-0.2619,-0.1187" 
-        results = client.live.flight_positions.get_full(bounds=bounds)
+        # all flights inbound to LGW
+        results = client.live.flight_positions.get_full(airports=["inbound:LGW"])
 
         # print table header
         print(f"--- Flights arriving at London Gatwick (LGW) ---")

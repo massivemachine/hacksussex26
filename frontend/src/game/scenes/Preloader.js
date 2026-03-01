@@ -38,6 +38,7 @@ export class Preloader extends Scene
 
         // game menu
         this.load.image('gatwick_background', 'gatwick_background.jpg')
+        this.load.image('monitor', 'monitor.png')
     }
 
     create ()

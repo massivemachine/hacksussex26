@@ -228,7 +228,7 @@ export class Game extends Scene
     spawnPlane () {
         const point = Phaser.Utils.Array.GetRandom(this.spawnPoints);
 
-        if (successfulDecisions >= 5){
+        if (this.successfulDecisions >= 5){
             this.scene.start('Win')
         } else {
             if ((point.x == 0 && !this.leftSide) || (point.x != 0 && !this.rightSide)) {

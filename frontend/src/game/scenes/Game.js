@@ -287,14 +287,16 @@ export class Game extends Scene
                     }
                     plane.setPosition(landingX, landingY);
 
-                    if (!cleared) {
-                        this.scene.start('GameOver');
-                    }
-                    cleared = false;
-
                     this.time.delayedCall(5000, () => {
                         if (plane.active) {
                             plane.destroy();
+                            if (plane_selection["solution"] == "denied") {
+                                this.scene.start('GameOver');
+                            }
+                            if (!cleared) {
+                                this.scene.start('GameOver');
+                            }
+                            cleared = false;
                         }
                     }, [], this);
                 }, [], this);
@@ -333,6 +335,9 @@ export class Game extends Scene
 
                 this.time.delayedCall(3000, () => {
                     plane.destroy();
+                    if (plane_selection["solution"] == "clear") {
+                        this.scene.start('GameOver');
+                    }
                 }, [], this);
             });
             

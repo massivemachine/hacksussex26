@@ -41,6 +41,9 @@ export class Preloader extends Scene
         this.load.image('logo', 'logo.svg');
         this.load.spritesheet('plane', 'plane.png', { frameWidth: 335, frameHeight: 150 });
 
+        // tutorial
+        this.load.image('tutorial_background', 'tutorial.png')
+
         // game menu
         this.load.image('gatwick_background', 'gatwick_background.jpg')
         this.load.image('monitor', 'monitor.png')

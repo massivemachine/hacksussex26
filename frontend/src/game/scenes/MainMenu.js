@@ -38,7 +38,7 @@ export class MainMenu extends Scene
         })
 
         startButton.on('pointerdown', () => {
-            this.scene.start('Game');
+            this.scene.start('Tutorial');
         });
 
         // music logic

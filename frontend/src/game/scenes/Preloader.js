@@ -48,6 +48,8 @@ export class Preloader extends Scene
 
         // text box
         this.load.image('textbox', 'text_box.png')
+        // guide notes
+        this.load.image('notes', 'guide_notes.png')
     }
 
     create ()

@@ -14,7 +14,7 @@ export class MainMenu extends Scene
         this.add.image(650, 140, 'logo').setScale(0.7);
         this.add.sprite(650, 580, 'plane');
 
-        const titleText = this.add.text(675, 300, 'Airport Traffic Control', {
+        const titleText = this.add.text(675, 300, 'Cleared for Landing', {
             fontFamily: 'Arial Black', fontSize: 45, color: '#074aaeff', //#1a4384 <- gatwick logo colour
             stroke: '#0000', strokeThickness: 8,
             align: 'center'

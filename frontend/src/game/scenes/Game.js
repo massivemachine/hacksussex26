@@ -70,6 +70,23 @@ export class Game extends Scene
             callback: this.spawnPlane,
             callbackScope: this
         });
+
+        this.planeDict = [];
+
+        fetch("http://10.1.135.19:5000/flightdata")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error: ${response.status}`);
+                }
+
+                return response.text();
+            })
+            .then((text) => {
+                this.planeDict = text;
+            })
+            .catch((error) => {
+                console.log("error");
+            });
     
     }
 
@@ -79,6 +96,8 @@ export class Game extends Scene
         plane.setDisplaySize(50, 50);
         plane.setOrigin(0, 0);
         plane.setVelocityY(25);
+
+        this.createTextBox(point.x != 0);
 
         // map information
         const runwayX = 235;
@@ -145,6 +164,18 @@ export class Game extends Scene
             callback: this.spawnPlane,
             callbackScope: this,
         });
+
+    }
+
+
+
+    createTextBox (right) {
+        if (right) {
+            const textbox = this.add.sprite(1030,140,'textbox').setScale(0.45).setAlpha(0.9);
+        } else {
+            const textbox = this.add.sprite(270,140,'textbox').setScale(0.45).setAlpha(0.9);
+        }
+        
 
     }
 }

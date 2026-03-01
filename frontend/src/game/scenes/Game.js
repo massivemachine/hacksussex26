@@ -319,7 +319,6 @@ export class Game extends Scene
                         if (!cleared) {
                             this.scene.start('GameOver');
                         }
-                        cleared = false;
 
                         this.time.delayedCall(5000, () => {
                             if (plane.active) {
@@ -332,6 +331,7 @@ export class Game extends Scene
                                 }
 
                                 plane.destroy();
+                                cleared = false;
                             }
                         }, [], this);
                     }, [], this);

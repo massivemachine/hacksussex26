@@ -45,6 +45,10 @@ export class Preloader extends Scene
         this.load.image('gatwick_background', 'gatwick_background.jpg')
         this.load.image('monitor', 'monitor.png')
         this.load.image('plane_sprite', 'commercial.png')
+
+        // text box
+        this.load.image('textbox', 'text_box.png')
+        // guide notes
         this.load.image('notes', 'guide_notes.png')
     }
 

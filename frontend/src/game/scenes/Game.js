@@ -101,81 +101,126 @@ export class Game extends Scene
             callback: this.spawnPlane,
             callbackScope: this
         });
+
+        this.planeDict = [];
+
+        fetch("http://10.1.135.19:5000/flightdata")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error: ${response.status}`);
+                }
+
+                return response.text();
+            })
+            .then((text) => {
+                this.planeDict = text;
+            })
+            .catch((error) => {
+                console.log("error");
+            });
+        
+        this.rightSide = false;
+        this.leftSide = false;
     
     }
 
     spawnPlane () {
         const point = Phaser.Utils.Array.GetRandom(this.spawnPoints);
-        const plane = this.physics.add.sprite(point.x, point.y, 'plane_sprite');
-        plane.setDisplaySize(50, 50);
-        plane.setOrigin(0, 0);
-        plane.setVelocityY(25);
+        console.log(point.x);
+        console.log(this.leftSide);
+        console.log(this.rightSide);
 
-        // map information
-        const runwayX = 235;
-        const runwayY = 490;
-        const landingX = 760;
-        const landingY = 390;
-        const planeSpeed = 50;
+        if ((point.x == 0 && !this.leftSide) || (point.x != 0 && !this.rightSide)) {
+            const plane = this.physics.add.sprite(point.x, point.y, 'plane_sprite');
+            plane.setDisplaySize(50, 50);
+            plane.setOrigin(0, 0);
+            plane.setVelocityY(25);
 
-        // line plane up to runway and wait for plane to reach point
-        this.physics.moveTo(plane, runwayX, runwayY, planeSpeed);
-        const runwayAngle = Phaser.Math.Angle.Between(plane.x, plane.y, runwayX, runwayY) + Math.PI/2;
-        plane.setRotation(runwayAngle);
+            if (point.x == 0) {
+                this.leftSide = true;
+            } else {
+                this.rightSide = true;
+            }
 
-        const distanceToRunway = Phaser.Math.Distance.Between(plane.x, plane.y, runwayX, runwayY);
-        const travelTimeMs = (distanceToRunway / Math.max(planeSpeed, 1)) * 1000;
+            this.createTextBox(point.x != 0);
 
-        // runway point visualisation
-        /*
-        const runwayPoint = this.add.text(runwayX, runwayY, 'X', {
-            fontFamily: 'Arial Black', fontSize: 25, color: '#c63535ff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        }).setOrigin(0.5);
-        */
+            // map information
+            const runwayX = 235;
+            const runwayY = 490;
+            const landingX = 760;
+            const landingY = 390;
+            const planeSpeed = 50;
 
-        this.time.delayedCall(Math.max(0, Math.round(travelTimeMs)), () => {
+            // line plane up to runway and wait for plane to reach point
+            this.physics.moveTo(plane, runwayX, runwayY, planeSpeed);
+            const runwayAngle = Phaser.Math.Angle.Between(plane.x, plane.y, runwayX, runwayY) + Math.PI/2;
+            plane.setRotation(runwayAngle);
 
-            // land plane on runway and stop after landing
-            this.physics.moveTo(plane, landingX, landingY, planeSpeed);
-            const landingAngle = Phaser.Math.Angle.Between(plane.x, plane.y, landingX, landingY) + Math.PI/2;
-            plane.setRotation(landingAngle);
+            const distanceToRunway = Phaser.Math.Distance.Between(plane.x, plane.y, runwayX, runwayY);
+            const travelTimeMs = (distanceToRunway / Math.max(planeSpeed, 1)) * 1000;
 
-            const distanceToLanding = Phaser.Math.Distance.Between(plane.x, plane.y, landingX, landingY);
-            const landingTimeMs = (distanceToLanding / Math.max(planeSpeed, 1)) * 1000;
-
-            // landed plane logic
-            this.time.delayedCall(Math.max(0, Math.round(landingTimeMs)), () => {
-                if (plane.body) {
-                    plane.body.velocity.x = 0;
-                    plane.body.velocity.y = 0;
-                    plane.body.moves = false;
-                }
-                plane.setPosition(landingX, landingY);
-
-                // destroy plane sprite after some time
-                this.time.delayedCall(5000, () => {
-                    plane.destroy();
-                }, [], this);
-            }, [], this);
-
-            // landing point visualisation
+            // runway point visualisation
             /*
-            const landingPoint = this.add.text(landingX, landingY, 'X', {
+            const runwayPoint = this.add.text(runwayX, runwayY, 'X', {
                 fontFamily: 'Arial Black', fontSize: 25, color: '#c63535ff',
                 stroke: '#000000', strokeThickness: 8,
                 align: 'center'
             }).setOrigin(0.5);
             */
 
-        });
+            this.time.delayedCall(Math.max(0, Math.round(travelTimeMs)), () => {
+
+                // land plane on runway and stop after landing
+                this.physics.moveTo(plane, landingX, landingY, planeSpeed);
+                const landingAngle = Phaser.Math.Angle.Between(plane.x, plane.y, landingX, landingY) + Math.PI/2;
+                plane.setRotation(landingAngle);
+
+                const distanceToLanding = Phaser.Math.Distance.Between(plane.x, plane.y, landingX, landingY);
+                const landingTimeMs = (distanceToLanding / Math.max(planeSpeed, 1)) * 1000;
+
+                // landed plane logic
+                this.time.delayedCall(Math.max(0, Math.round(landingTimeMs)), () => {
+                    if (plane.body) {
+                        plane.body.velocity.x = 0;
+                        plane.body.velocity.y = 0;
+                        plane.body.moves = false;
+                    }
+                    plane.setPosition(landingX, landingY);
+
+                    // destroy plane sprite after some time
+                    this.time.delayedCall(5000, () => {
+                        plane.destroy();
+                    }, [], this);
+                }, [], this);
+
+                // landing point visualisation
+                /*
+                const landingPoint = this.add.text(landingX, landingY, 'X', {
+                    fontFamily: 'Arial Black', fontSize: 25, color: '#c63535ff',
+                    stroke: '#000000', strokeThickness: 8,
+                    align: 'center'
+                }).setOrigin(0.5);
+                */
+
+            });
+        }
 
         this.time.addEvent({
             delay: Phaser.Math.Between(10000, 15000),
             callback: this.spawnPlane,
             callbackScope: this,
         });
+    }
+
+
+
+    createTextBox (right) {
+        if (right) {
+            const textbox = this.add.sprite(1030,140,'textbox').setScale(0.45).setAlpha(0.9);
+        } else {
+            const textbox = this.add.sprite(270,140,'textbox').setScale(0.45).setAlpha(0.9);
+        }
+        
 
     }
 }

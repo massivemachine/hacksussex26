@@ -174,21 +174,21 @@ export class Game extends Scene
             {"type":"Light", "altitude":2800, "gspeed":60, "fuel":18, "glideangle":3, "transmission":"Slow flight practice done. Over.", "solution":"denied"},
             {"type":"Commercial", "altitude":4200, "gspeed":165, "fuel":200, "glideangle":3, "transmission":"Request descent to 3000. Over.", "solution":"denied"},
             {"type":"Light", "altitude":3000, "gspeed":74, "fuel":4, "glideangle":3, "transmission":"Short hop, 5 miles out. Over.", "solution":"clear"}, // Fuel < 5
-    {"type":"Commercial", "altitude":2700, "gspeed":195, "fuel":120, "glideangle":3, "transmission":"Increasing speed, making time. Over.", "solution":"denied"},
-    {"type":"Light", "altitude":2100, "gspeed":78, "fuel":15, "glideangle":3, "transmission":"Low level M23 flyover. Clear? Over.", "solution":"denied"},
-    {"type":"Commercial", "altitude":3800, "gspeed":172, "fuel":55, "glideangle":3, "transmission":"Checking in, all green here. Over.", "solution":"clear"}, // Fuel < 60
-    {"type":"Light", "altitude":3400, "gspeed":110, "fuel":40, "glideangle":3, "transmission":"Express arrival, keeping speed up.", "solution":"denied"},
-    {"type":"Commercial", "altitude":2400, "gspeed":140, "fuel":90, "glideangle":3, "transmission":"On localizer, gear coming down.", "solution":"denied"},
-    {"type":"Light", "altitude":4300, "gspeed":65, "fuel":22, "glideangle":3, "transmission":"High observation, landing in 10.", "solution":"denied"},
-    {"type":"Commercial", "altitude":3100, "gspeed":182, "fuel":35, "glideangle":3, "transmission":"Approaching marker, clear us. Over.", "solution":"clear"}, // Fuel < 60
-    {"type":"Commercial", "altitude":2200, "gspeed":170, "fuel":110, "glideangle":4, "transmission":"Approach too high and steep. Over.", "solution":"denied"},
-    {"type":"Light", "altitude":3100, "gspeed":95, "fuel":25, "glideangle":3, "transmission":"Pushing engine to beat storm. Over.", "solution":"denied"},
-    {"type":"Commercial", "altitude":3500, "gspeed":130, "fuel":150, "glideangle":2, "transmission":"Flap issues, angle unstable. Over.", "solution":"denied"},
-    {"type":"Light", "altitude":4500, "gspeed":75, "fuel":30, "glideangle":3, "transmission":"Accidental climb above 4000. Over.", "solution":"denied"},
-    {"type":"Commercial", "altitude":3300, "gspeed":175, "fuel":40, "glideangle":3, "transmission":"Fuel light on, checking reserves.", "solution":"clear"}, // Fuel < 60
-    {"type":"Light", "altitude":2800, "gspeed":60, "fuel":18, "glideangle":3.2, "transmission":"Headwind dropping ground speed.", "solution":"denied"},
-    {"type":"Commercial", "altitude":4200, "gspeed":165, "fuel":200, "glideangle":3, "transmission":"Overshot cruise altitude. Over.", "solution":"denied"},
-    {"type":"Light", "altitude":3000, "gspeed":74, "fuel":4, "glideangle":3, "transmission":"Low fuel, request priority now.", "solution":"clear"}, // Fuel < 5
+            {"type":"Commercial", "altitude":2700, "gspeed":195, "fuel":120, "glideangle":3, "transmission":"Increasing speed, making time. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":2100, "gspeed":78, "fuel":15, "glideangle":3, "transmission":"Low level M23 flyover. Clear? Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":3800, "gspeed":172, "fuel":55, "glideangle":3, "transmission":"Checking in, all green here. Over.", "solution":"clear"}, // Fuel < 60
+            {"type":"Light", "altitude":3400, "gspeed":110, "fuel":40, "glideangle":3, "transmission":"Express arrival, keeping speed up.", "solution":"denied"},
+            {"type":"Commercial", "altitude":2400, "gspeed":140, "fuel":90, "glideangle":3, "transmission":"On localizer, gear coming down.", "solution":"denied"},
+            {"type":"Light", "altitude":4300, "gspeed":65, "fuel":22, "glideangle":3, "transmission":"High observation, landing in 10.", "solution":"denied"},
+            {"type":"Commercial", "altitude":3100, "gspeed":182, "fuel":35, "glideangle":3, "transmission":"Approaching marker, clear us. Over.", "solution":"clear"}, // Fuel < 60
+            {"type":"Commercial", "altitude":2200, "gspeed":170, "fuel":110, "glideangle":4, "transmission":"Approach too high and steep. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":3100, "gspeed":95, "fuel":25, "glideangle":3, "transmission":"Pushing engine to beat storm. Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":3500, "gspeed":130, "fuel":150, "glideangle":2, "transmission":"Flap issues, angle unstable. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":4500, "gspeed":75, "fuel":30, "glideangle":3, "transmission":"Accidental climb above 4000. Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":3300, "gspeed":175, "fuel":40, "glideangle":3, "transmission":"Fuel light on, checking reserves.", "solution":"clear"}, // Fuel < 60
+            {"type":"Light", "altitude":2800, "gspeed":60, "fuel":18, "glideangle":3.2, "transmission":"Headwind dropping ground speed.", "solution":"denied"},
+            {"type":"Commercial", "altitude":4200, "gspeed":165, "fuel":200, "glideangle":3, "transmission":"Overshot cruise altitude. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":3000, "gspeed":74, "fuel":4, "glideangle":3, "transmission":"Low fuel, request priority now.", "solution":"clear"}, // Fuel < 5
             {"type":"Commercial", "altitude":2700, "gspeed":195, "fuel":120, "glideangle":4, "transmission":"Overspeeding, forcing nose down.", "solution":"denied"},
             {"type":"Light", "altitude":2100, "gspeed":78, "fuel":15, "glideangle":2.8, "transmission":"Too low, adding power. Over.", "solution":"denied"},
             {"type":"Commercial", "altitude":3100, "gspeed":165, "fuel":145, "glideangle":3, "transmission":"Passing 3100, checking in. Over.", "solution":"clear"},
@@ -200,7 +200,27 @@ export class Game extends Scene
             {"type":"Commercial", "altitude":3450, "gspeed":172, "fuel":135, "glideangle":3, "transmission":"Hydraulic green, normal arrival.", "solution":"clear"},
             {"type":"Light", "altitude":2950, "gspeed":75, "fuel":9, "glideangle":3, "transmission":"Rectangular patterns, field tight.", "solution":"clear"},
             {"type":"Commercial", "altitude":3150, "gspeed":160, "fuel":195, "glideangle":3, "transmission":"Catering confirmed, North Terminal.", "solution":"clear"},
-            {"type":"Light", "altitude":3200, "gspeed":79, "fuel":16, "glideangle":3, "transmission":"Heading back to hangar now. Over.", "solution":"clear"}
+            {"type":"Light", "altitude":3200, "gspeed":79, "fuel":16, "glideangle":3, "transmission":"Heading back to hangar now. Over.", "solution":"clear"},
+            {"type":"Commercial", "altitude":1800, "gspeed":160, "fuel":120, "glideangle":3, "transmission":"Below glide path, correcting now.", "solution":"denied"},
+            {"type":"Light", "altitude":3200, "gspeed":90, "fuel":15, "glideangle":3, "transmission":"Fast approach on Runway 26L. Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":3000, "gspeed":170, "fuel":150, "glideangle":3.5, "transmission":"Steep descent into Gatwick. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":4200, "gspeed":75, "fuel":20, "glideangle":3, "transmission":"Above Gatwick transition alt. Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":3500, "gspeed":140, "fuel":95, "glideangle":3, "transmission":"Speed dropping, request priority.", "solution":"denied"},
+            {"type":"Light", "altitude":2500, "gspeed":65, "fuel":10, "glideangle":3, "transmission":"Too slow on final approach. Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":4500, "gspeed":175, "fuel":200, "glideangle":3, "transmission":"Holding high for traffic. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":3000, "gspeed":72, "fuel":12, "glideangle":2.5, "transmission":"Shallow approach to 08R. Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":2800, "gspeed":195, "fuel":130, "glideangle":3, "transmission":"Overspeed on the localizer. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":1900, "gspeed":78, "fuel":30, "glideangle":3, "transmission":"Low level sightseeing LGW. Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":3100, "gspeed":165, "fuel":180, "glideangle":4.2, "transmission":"Unstable glide, nose down. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":3300, "gspeed":105, "fuel":25, "glideangle":3, "transmission":"Racing the arrival slot. Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":2200, "gspeed":145, "fuel":75, "glideangle":3, "transmission":"Slow and low into Gatwick. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":4100, "gspeed":74, "fuel":18, "glideangle":3, "transmission":"Over the ceiling for VFR. Over.", "solution":"denied"},
+            {"type":"Commercial", "altitude":3800, "gspeed":172, "fuel":250, "glideangle":2.2, "transmission":"Angle too shallow for ILS. Over.", "solution":"denied"},
+            {"type":"Light", "altitude":2700, "gspeed":85, "fuel":14, "glideangle":3.1, "transmission":"Hot and high on the base leg.", "solution":"denied"},
+            {"type":"Commercial", "altitude":2900, "gspeed":190, "fuel":110, "glideangle":3, "transmission":"Late arrival, pushing speed.", "solution":"denied"},
+            {"type":"Light", "altitude":3500, "gspeed":55, "fuel":22, "glideangle":3, "transmission":"Stall warning, adding power.", "solution":"denied"},
+            {"type":"Commercial", "altitude":4300, "gspeed":168, "fuel":140, "glideangle":3, "transmission":"High approach, request orbit.", "solution":"denied"},
+            {"type":"Light", "altitude":2800, "gspeed":76, "fuel":35, "glideangle":3.8, "transmission":"Sinking fast toward the numbers.", "solution":"denied"}
         ];
 
     }

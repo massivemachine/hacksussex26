@@ -204,36 +204,51 @@ export class Game extends Scene
             plane.setOrigin(0, 0);
             plane.setVelocityY(25);
 
+            var cleared = false;
+
             if (point.x == 0) {
                 this.leftSide = true;
             } else {
                 this.rightSide = true;
             }
-            
-            // text box
-
+          
+            // textbox and landing button logic
+            let textbox, allowLanding, denyLanding, header, body;
             var plane_selection = this.planeStats[Math.floor(Math.random() * this.planeStats.length)];
             var plane_name = "aaa"
             
             var header_text = `Transmission from flight ${plane_name}`;
             var body_text = `${plane_selection["type"]} aircraft flight ${plane_name} requesting\nlanding. Approach altitude ${plane_selection["altitude"]}, ground speed\n${plane_selection["gspeed"]}, ${plane_selection["fuel"]} remaining fuel and ${plane_selection["glideangle"]}° glide angle.\n\n>> "${plane_selection["transmission"]}"`;
 
-            if (point.x != 0) {
-                const textbox = this.add.sprite(1030,140,'textbox').setScale(0.45).setAlpha(0.9);
-                var header = this.add.text(825,42, header_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white'});
-                var body = this.add.text(825,77, body_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white', fontSize: 15});
+            if (point.x !== 0) {
+                textbox = this.add.sprite(1030, 140, 'textbox').setScale(0.45).setAlpha(0.9);
+                header = this.add.text(825,42, header_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white'});
+                body = this.add.text(825,77, body_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white', fontSize: 15});
+                allowLanding = this.add.image(970, 260, 'allow').setScale(0.15).setInteractive();
+                denyLanding = this.add.image(1090, 265, 'deny').setScale(0.15).setInteractive();
             } else {
-                const textbox = this.add.sprite(270,140,'textbox').setScale(0.45).setAlpha(0.9);
-                var header = this.add.text(65,42, header_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white'});
-                var body = this.add.text(65,77, body_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white', fontSize: 15});
+                textbox = this.add.sprite(270, 140, 'textbox').setScale(0.45).setAlpha(0.9);
+                header = this.add.text(65,42, header_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white'});
+                body = this.add.text(65,77, body_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white', fontSize: 15});
+                allowLanding = this.add.image(200, 260, 'allow').setScale(0.15).setInteractive();
+                denyLanding = this.add.image(320, 265, 'deny').setScale(0.15).setInteractive();
             }
 
-            // map information
+            // helper that removes the UI
+            const clearDecisionUI = () => {
+                textbox.destroy();
+                allowLanding.destroy();
+                denyLanding.destroy();
+                header.destroy();
+                body.destroy();
+            };  
+
+            // shared constants
             const runwayX = 235;
             const runwayY = 490;
             const landingX = 760;
             const landingY = 390;
-            const planeSpeed = 50;
+            const planeSpeed = 40;
 
             // line plane up to runway and wait for plane to reach point
             this.physics.moveTo(plane, runwayX, runwayY, planeSpeed);
@@ -243,18 +258,8 @@ export class Game extends Scene
             const distanceToRunway = Phaser.Math.Distance.Between(plane.x, plane.y, runwayX, runwayY);
             const travelTimeMs = (distanceToRunway / Math.max(planeSpeed, 1)) * 1000;
 
-            // runway point visualisation
-            /*
-            const runwayPoint = this.add.text(runwayX, runwayY, 'X', {
-                fontFamily: 'Arial Black', fontSize: 25, color: '#c63535ff',
-                stroke: '#000000', strokeThickness: 8,
-                align: 'center'
-            }).setOrigin(0.5);
-            */
-
             this.time.delayedCall(Math.max(0, Math.round(travelTimeMs)), () => {
-
-                // land plane on runway and stop after landing
+                if (!plane.active) return;
                 this.physics.moveTo(plane, landingX, landingY, planeSpeed);
                 const landingAngle = Phaser.Math.Angle.Between(plane.x, plane.y, landingX, landingY) + Math.PI/2;
                 plane.setRotation(landingAngle);
@@ -262,8 +267,8 @@ export class Game extends Scene
                 const distanceToLanding = Phaser.Math.Distance.Between(plane.x, plane.y, landingX, landingY);
                 const landingTimeMs = (distanceToLanding / Math.max(planeSpeed, 1)) * 1000;
 
-                // landed plane logic
                 this.time.delayedCall(Math.max(0, Math.round(landingTimeMs)), () => {
+                    if (!plane.active) return;
                     if (plane.body) {
                         plane.body.velocity.x = 0;
                         plane.body.velocity.y = 0;
@@ -271,22 +276,55 @@ export class Game extends Scene
                     }
                     plane.setPosition(landingX, landingY);
 
-                    // destroy plane sprite after some time
+                    if (!cleared) {
+                        this.scene.start('GameOver');
+                    }
+                    cleared = false;
+
                     this.time.delayedCall(5000, () => {
-                        plane.destroy();
+                        if (plane.active) {
+                            plane.destroy();
+                        }
                     }, [], this);
                 }, [], this);
+            }, [], this);
 
-                // landing point visualisation
-                /*
-                const landingPoint = this.add.text(landingX, landingY, 'X', {
-                    fontFamily: 'Arial Black', fontSize: 25, color: '#c63535ff',
-                    stroke: '#000000', strokeThickness: 8,
-                    align: 'center'
-                }).setOrigin(0.5);
-                */
+            allowLanding.on('pointerdown', () => {
+                clearDecisionUI();
+
+                // free spawn side for a new aircraft
+                if (point.x === 0) {
+                    this.leftSide = false;
+                } else {
+                    this.rightSide = false;
+                }
+
+                cleared = true;
 
             });
+
+            denyLanding.on('pointerdown', () => {
+                clearDecisionUI();
+
+                // send plane off screen
+                const offscreenX = point.x === 0 ? -200 : 1500;
+                const offscreenY = point.y;
+                const turnAngle = Phaser.Math.Angle.Between(plane.x, plane.y, offscreenX, offscreenY) + Math.PI / 2;
+                plane.setRotation(turnAngle);
+                this.physics.moveTo(plane, offscreenX, offscreenY, planeSpeed);
+
+                // free spawn side for a new aircraft
+                if (point.x === 0) {
+                    this.leftSide = false;
+                } else {
+                    this.rightSide = false;
+                }
+
+                this.time.delayedCall(3000, () => {
+                    plane.destroy();
+                }, [], this);
+            });
+            
         }
 
         this.time.addEvent({

@@ -1,1 +1,69 @@
-altitude,gspeed,fuel,glideangle,transmission
+type,altitude,gspeed,fuel,glideangle,transmission,solution
+commercial,2700,175,180,3,"Thirty minutes behind schedule, no other issues on our end. Over.",clear
+light,3300,80,50,3,"Clear for landing? Over.",clear
+commercial,3000,170,210,3,"Ill passenger on board, requesting immediate landing.",clear
+commercial,3200,165,140,3,"Heavy headwind encountered, adjusting arrival time. Over.",clear
+light,2600,75,12,3,"Requesting touch and go on runway. Over.",clear
+commercial,3900,182,240,3,"Descending to transition altitude, smooth ride so far. Over.",clear
+light,3100,72,45,3,"Final approach fixed, gear down and locked. Over.",clear
+commercial,2850,155,95,3,"Minor turbulence at current flight level, staying at 2850. Over.",clear
+light,3500,78,30,3,"Visual flight rules in effect, sightseeing along the coast. Over.",clear
+commercial,3400,170,110,3,"Medical priority: Passenger with severe allergic reaction. Requesting priority. Over.",clear
+light,2700,70,8,3,"Low fuel state, requesting direct path to the numbers. Over.",clear
+commercial,3000,160,185,3,"Standard approach pattern, no delays reported. Over.",clear
+light,3300,74,22,3,"Inbound from the north, five miles out. Over.",clear
+commercial,3600,178,210,3,"Cabin crew reports all secure for landing. Over.",clear
+light,2900,71,15,3,"Requesting wind check for runway. Over.",clear
+commercial,2550,152,75,3,"Transitioning to tower frequency now. Over.",clear
+light,3800,76,55,3,"Maintaining altitude for traffic separation. Over.",clear
+commercial,3150,168,130,3,"Slight delay in baggage handling reported from destination. Over.",clear
+light,2650,73,10,3,"Crosswind leg completed, turning base. Over.",clear
+commercial,3750,185,300,3,"International arrival, requesting gate assignment. Over.",clear
+light,3450,79,38,3,"Student pilot on board, requesting extra spacing. Over.",clear
+commercial,2950,158,88,3,"Anti-ice systems active, light icing at 3000. Over.",clear
+light,3050,72,25,3,"Entering the downwind for runway. Over.",clear
+commercial,3350,172,160,3,"Navigation computer glitch resolved, proceeding as planned. Over.",clear
+light,2800,75,18,3,"Holding short of runway for departing heavy. Over.",clear
+commercial,3850,180,225,3,"Fuel conservation mode active due to holding pattern. Over.",clear
+light,3600,77,40,3,"Requesting transition through your airspace. Over.",clear
+commercial,2750,162,105,3,"Autopilot disengaged, flying manual approach. Over.",clear
+light,3250,74,14,3,"Reporting bird activity near the tree line. Over.",clear
+commercial,3550,175,190,3,"First officer handling the radio, captain flying. Over.",clear
+light,3950,70,50,3,"Returning to base due to sunset limitations. Over.",clear
+commercial,3050,166,120,3,"Passenger disturbance in row 14, situation contained. Over.",clear
+light,2550,78,9,3,"Established on the glide slope, three miles out. Over.",clear
+commercial,2200,170,110,3,"Standard approach, requesting landing clearance. Over.",denied
+light,3100,95,25,2,"Beautiful day for a flight, inbound for runway nine. Over.",denied
+commercial,3500,130,150,3,"Reducing speed for spacing behind a light aircraft. Over.",denied
+light,4500,75,30,3,"Maintaining VFR at 4500 feet, requesting transition. Over.",denied
+commercial,3300,175,40,3,"Continuing on current vector, no issues to report. Over.",denied
+light,2800,60,18,3,"Slow flight practice completed, heading for the numbers. Over.",denied
+commercial,4200,165,200,3,"Requesting descent to 3000, currently at 4200. Over.",denied
+light,3000,74,4,3,"Just a short hop today, five miles from the field. Over.",denied
+commercial,2700,195,120,3,"Increasing speed to make up for lost time. Over.",denied
+light,2100,78,15,3,"Low level flight along the coastline, clear for landing? Over.",denied
+commercial,3800,172,55,3,"Checking in with tower, everything is green on the panel. Over.",denied
+light,3400,110,40,3,"Express arrival, keeping the speed up on final. Over.",denied
+commercial,2400,140,90,3,"Established on localizer, gear coming down. Over.",denied
+light,4300,65,22,3,"High altitude observation, requesting landing in ten. Over.",denied
+commercial,3100,182,35,3,"Approaching the outer marker, requesting clearance. Over.",denied
+commercial,2200,170,110,3.5,"We are coming in too high and steep on the glide slope. Over.",denied
+light,3100,95,25,3,"Pushing the engine to beat the incoming storm clouds. Over.",denied
+commercial,3500,130,150,2.5,"Flap issues, having trouble maintaining a standard 3 degree angle. Over.",denied
+light,4500,75,30,3,"Accidentally climbed above our assigned 4000 ceiling. Over.",denied
+commercial,3300,175,40,3,"Fuel light just came on, checking our reserves now. Over.",denied
+light,2800,60,18,3.2,"Strong headwind is dropping our ground speed below 70 knots. Over.",denied
+commercial,4200,165,200,3,"Overshot our cruise altitude during the climb. Over.",denied
+light,3000,74,4,3,"Low fuel warning, requesting immediate priority landing. Over.",denied
+commercial,2700,195,120,4.0,"Overspeeding on final, trying to force the nose down. Over.",denied
+light,2100,78,15,2.8,"Too low for the glide path, adding power to compensate. Over.",denied
+commercial,3100,165,145,3,"Passing through three thousand one hundred, checking in. Over.",clear
+light,2850,72,12,3,"Student pilot solo flight, requesting full stop landing. Over.",clear
+commercial,3950,180,210,3,"Requesting lower altitude to avoid cloud layer at four thousand. Over.",clear
+light,3300,77,28,3,"Clear of the active runway, switching to ground. Over.",clear
+commercial,2600,155,90,3,"Heavy bird activity reported on departure, keeping a sharp eye. Over.",clear
+light,3700,71,44,3,"Visual on the airfield, entering left downwind for runway nine. Over.",clear
+commercial,3450,172,135,3,"Hydraulic pressures in the green, proceeding with normal arrival. Over.",clear
+light,2950,75,9,3,"Practicing rectangular patterns, keeping it tight to the field. Over.",clear
+commercial,3150,160,195,3,"Catering services confirmed for gate arrival, no delays expected. Over.",clear
+light,3200,79,16,3,"Local flight, heading back to the hangar for the evening. Over.",clear

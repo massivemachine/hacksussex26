@@ -104,16 +104,19 @@ export class Game extends Scene
 
         this.planeDict = [];
 
-        fetch("http://10.1.135.19:5000/flightdata")
+        fetch("http://10.1.214.126:5000/flightdata")
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error: ${response.status}`);
                 }
-
-                return response.text();
+                //console.log(response.text())
+                var responsejson = response.json()
+                console.log(responsejson)
+                return responsejson;
             })
             .then((text) => {
-                this.planeDict = text;
+                this.planeDict = text["data"];
+                console.log(this.planeDict)
             })
             .catch((error) => {
                 console.log("error");

@@ -2,10 +2,10 @@ from fr24sdk.client import Client
 from datetime import datetime, timezone, timedelta
 
 # TEST API KEY -- Uses 0 api key credits to query but returns false data
-api_token = "019ca545-ae71-731f-be21-82a9fed0ad69|o95d27QrcstvarZKoG3xJsgmoSNCWSOXMkF2nLcve2862b39"
+#api_token = "019ca545-ae71-731f-be21-82a9fed0ad69|o95d27QrcstvarZKoG3xJsgmoSNCWSOXMkF2nLcve2862b39"
 
 # ACTUAL API KEY -- Uses around 110 api key credits to query
-#api_token = "019ca548-a0fe-7011-b1b5-ba68aeddeee7|JN5YPrGT4pHFAQsMDqRZeNssRPXENsgg4JSCH1s8e62ba956"
+api_token = "019ca548-a0fe-7011-b1b5-ba68aeddeee7|JN5YPrGT4pHFAQsMDqRZeNssRPXENsgg4JSCH1s8e62ba956"
 
 def getData() -> dict:
     flightData = []

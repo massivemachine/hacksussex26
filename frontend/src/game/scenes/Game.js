@@ -318,8 +318,8 @@ export class Game extends Scene
                 clearDecisionUI();
 
                 // send plane off screen
-                const offscreenX = point.x === 0 ? -200 : 1500;
-                const offscreenY = point.y;
+                const offscreenX = point.x === 0 ? -2000 : 3000;
+                const offscreenY = point.y + Phaser.Math.Between(-200, 200);
                 const turnAngle = Phaser.Math.Angle.Between(plane.x, plane.y, offscreenX, offscreenY) + Math.PI / 2;
                 plane.setRotation(turnAngle);
                 this.physics.moveTo(plane, offscreenX, offscreenY, planeSpeed);

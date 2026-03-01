@@ -32,6 +32,11 @@ export class Preloader extends Scene
         //  Load the assets for the game - Replace with your own assets
         this.load.setPath('assets');
 
+        // music
+        this.load.audio('main_theme', 'CREEK.mp3');
+        this.load.image('mute', 'mute.png')
+        this.load.image('volume', 'volume.png')
+
         // main menu
         this.load.image('logo', 'logo.svg');
         this.load.spritesheet('plane', 'plane.png', { frameWidth: 335, frameHeight: 150 });

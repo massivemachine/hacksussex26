@@ -40,6 +40,35 @@ export class MainMenu extends Scene
         startButton.on('pointerdown', () => {
             this.scene.start('Game');
         });
+
+        // music logic
+        let music = this.sound.get('main_theme');
+        if (!music) {
+            music = this.sound.add('main_theme', { loop: true });
+            music.play();
+        }
+
+        const volume = this.add.image(50, 50, 'volume').setScale(0.05).setInteractive();
+        let isMuted = this.registry.get('isMuted') || false;
+
+        if (isMuted) {
+            music.pause();
+            volume.setTexture('mute');
+        }
+
+        volume.on('pointerdown', () => {
+            isMuted = !isMuted;
+            this.registry.set('isMuted', isMuted);
+
+            if (isMuted) {
+                music.pause();
+                volume.setTexture('mute');
+            } else {
+                music.resume();
+                volume.setTexture('volume');
+            }
+        });
+
     }
 
     update ()

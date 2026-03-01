@@ -94,7 +94,14 @@ export class Game extends Scene
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         }).setOrigin(0.5);
-        */        
+        */
+
+        // Successful landing counter
+        this.successfulLandings = 0;
+        this.landedCounterText = this.add.text(650, 730, `Successful landings: ${this.successfulLandings}`, {
+            fontFamily: 'Arial', fontSize: 20, color: 'white'
+        }).setOrigin(0.5);
+        this.landedCounterText.setDepth(100);
 
         this.time.addEvent({
             delay: 2000,
@@ -121,7 +128,7 @@ export class Game extends Scene
             .catch((error) => {
                 console.log("error");
             });
-        
+
         this.rightSide = false;
         this.leftSide = false;
 
@@ -195,7 +202,7 @@ export class Game extends Scene
             {"type":"Commercial", "altitude":3150, "gspeed":160, "fuel":195, "glideangle":3, "transmission":"Catering confirmed, North Terminal.", "solution":"clear"},
             {"type":"Light", "altitude":3200, "gspeed":79, "fuel":16, "glideangle":3, "transmission":"Heading back to hangar now. Over.", "solution":"clear"}
         ];
-    
+
     }
 
     spawnPlane () {
@@ -218,7 +225,7 @@ export class Game extends Scene
             } else {
                 this.rightSide = true;
             }
-          
+
             // textbox and landing button logic
             let textbox, allowLanding, denyLanding, header, body;
             var plane_selection = this.planeStats[Math.floor(Math.random() * this.planeStats.length)];
@@ -227,7 +234,7 @@ export class Game extends Scene
             this.planeDict.splice(this.planeDict.indexOf(array_sel), 1);
 
             var plane_name = array_sel["name"];
-            
+
             var header_text = `Transmission from flight ${plane_name}`;
             var body_text = `${plane_selection["type"]} aircraft flight ${plane_name} requesting\nlanding. Approach altitude ${plane_selection["altitude"]}ft, ground speed\n${plane_selection["gspeed"]}mph, ${plane_selection["fuel"]}gal remaining fuel and ${plane_selection["glideangle"]}° glide angle.\n\n>> "${plane_selection["transmission"]}"`;
 
@@ -252,7 +259,7 @@ export class Game extends Scene
                 denyLanding.destroy();
                 header.destroy();
                 body.destroy();
-            };  
+            };
 
             // shared constants
             const runwayX = 235;
@@ -289,6 +296,14 @@ export class Game extends Scene
 
                     this.time.delayedCall(5000, () => {
                         if (plane.active) {
+                            // increment successful landing counter only when plane was cleared and solution is 'clear'
+                            if (cleared && plane_selection["solution"] === "clear") {
+                                this.successfulLandings++;
+                                if (this.landedCounterText) {
+                                    this.landedCounterText.setText(`Successful landings: ${this.successfulLandings}`);
+                                }
+                            }
+
                             plane.destroy();
                             if (plane_selection["solution"] == "denied") {
                                 this.scene.start('GameOver');
@@ -340,7 +355,7 @@ export class Game extends Scene
                     }
                 }, [], this);
             });
-            
+
         }
 
         this.time.addEvent({

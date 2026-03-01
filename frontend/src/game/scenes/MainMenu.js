@@ -11,26 +11,33 @@ export class MainMenu extends Scene
     create ()
     {
         this.background = this.add.tileSprite(675, 360, 0, 0, 'runway_background');
-        this.add.image(650, 200, 'logo');
+        this.add.image(650, 140, 'logo').setScale(0.7);
         this.add.sprite(650, 580, 'plane');
 
-        const menuText = this.add.text(675, 430, 'Start', {
+        const titleText = this.add.text(675, 300, 'Airport Traffic Control', {
+            fontFamily: 'Arial Black', fontSize: 45, color: '#074aaeff', //#1a4384 <- gatwick logo colour
+            stroke: '#0000', strokeThickness: 8,
+            align: 'center'
+        }).setOrigin(0.5);
+
+        // start button logic
+        const startButton = this.add.text(675, 430, 'Start', {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         }).setOrigin(0.5);
 
-        menuText.setInteractive();
+        startButton.setInteractive();
 
-        menuText.on('pointerover', function(){
+        startButton.on('pointerover', function(){
             this.setStyle({ fill: 'rgba(215, 215, 215, 1)'});
         })
 
-        menuText.on('pointerout', function(){
+        startButton.on('pointerout', function(){
             this.setStyle({ fill: '#ffffffff'});
         })
 
-        menuText.on('pointerdown', () => {
+        startButton.on('pointerdown', () => {
             this.scene.start('Game');
         });
     }

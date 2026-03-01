@@ -228,159 +228,159 @@ export class Game extends Scene
     spawnPlane () {
         const point = Phaser.Utils.Array.GetRandom(this.spawnPoints);
 
-        if (this.planeDict.length == 0){
+        if (this.planeDict.length == 10){
             this.scene.start('Win')
-        }
+        } else {
+            if ((point.x == 0 && !this.leftSide) || (point.x != 0 && !this.rightSide)) {
+                const plane = this.physics.add.sprite(point.x, point.y, 'plane_sprite');
+                plane.setDisplaySize(50, 50);
+                plane.setOrigin(0, 0);
+                plane.setVelocityY(25);
 
-        if ((point.x == 0 && !this.leftSide) || (point.x != 0 && !this.rightSide)) {
-            const plane = this.physics.add.sprite(point.x, point.y, 'plane_sprite');
-            plane.setDisplaySize(50, 50);
-            plane.setOrigin(0, 0);
-            plane.setVelocityY(25);
+                var cleared = false;
 
-            var cleared = false;
+                if (point.x == 0) {
+                    this.leftSide = true;
+                } else {
+                    this.rightSide = true;
+                }
 
-            if (point.x == 0) {
-                this.leftSide = true;
-            } else {
-                this.rightSide = true;
-            }
+                // textbox and landing button logic
+                let textbox, allowLanding, denyLanding, header, body;
+                var plane_selection = this.planeStats[Math.floor(Math.random() * this.planeStats.length)];
 
-            // textbox and landing button logic
-            let textbox, allowLanding, denyLanding, header, body;
-            var plane_selection = this.planeStats[Math.floor(Math.random() * this.planeStats.length)];
+                var array_sel = this.planeDict[Math.floor(Math.random() * this.planeDict.length)];
+                this.planeDict.splice(this.planeDict.indexOf(array_sel), 1);
 
-            var array_sel = this.planeDict[Math.floor(Math.random() * this.planeDict.length)];
-            this.planeDict.splice(this.planeDict.indexOf(array_sel), 1);
+                var plane_name = array_sel["name"];
 
-            var plane_name = array_sel["name"];
+                var header_text = `Transmission from flight ${plane_name}`;
+                var body_text = `${plane_selection["type"]} aircraft flight ${plane_name} requesting\nlanding. Approach altitude ${plane_selection["altitude"]}ft, ground speed\n${plane_selection["gspeed"]}mph, ${plane_selection["fuel"]}gal remaining fuel and ${plane_selection["glideangle"]}° glide angle.\n\n>> "${plane_selection["transmission"]}"`;
 
-            var header_text = `Transmission from flight ${plane_name}`;
-            var body_text = `${plane_selection["type"]} aircraft flight ${plane_name} requesting\nlanding. Approach altitude ${plane_selection["altitude"]}ft, ground speed\n${plane_selection["gspeed"]}mph, ${plane_selection["fuel"]}gal remaining fuel and ${plane_selection["glideangle"]}° glide angle.\n\n>> "${plane_selection["transmission"]}"`;
+                if (point.x !== 0) {
+                    textbox = this.add.sprite(1030, 140, 'textbox').setScale(0.45).setAlpha(0.9);
+                    header = this.add.text(825,42, header_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white'});
+                    body = this.add.text(825,77, body_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white', fontSize: 14.5});
+                    allowLanding = this.add.image(970, 260, 'allow').setScale(0.15).setInteractive();
+                    denyLanding = this.add.image(1090, 265, 'deny').setScale(0.15).setInteractive();
+                } else {
+                    textbox = this.add.sprite(270, 140, 'textbox').setScale(0.45).setAlpha(0.9);
+                    header = this.add.text(65,42, header_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white'});
+                    body = this.add.text(65,77, body_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white', fontSize: 14.5});
+                    allowLanding = this.add.image(200, 260, 'allow').setScale(0.15).setInteractive();
+                    denyLanding = this.add.image(320, 265, 'deny').setScale(0.15).setInteractive();
+                }
 
-            if (point.x !== 0) {
-                textbox = this.add.sprite(1030, 140, 'textbox').setScale(0.45).setAlpha(0.9);
-                header = this.add.text(825,42, header_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white'});
-                body = this.add.text(825,77, body_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white', fontSize: 14.5});
-                allowLanding = this.add.image(970, 260, 'allow').setScale(0.15).setInteractive();
-                denyLanding = this.add.image(1090, 265, 'deny').setScale(0.15).setInteractive();
-            } else {
-                textbox = this.add.sprite(270, 140, 'textbox').setScale(0.45).setAlpha(0.9);
-                header = this.add.text(65,42, header_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white'});
-                body = this.add.text(65,77, body_text, { fontFamily: 'Consolas, monaco, monospace', color: 'white', fontSize: 14.5});
-                allowLanding = this.add.image(200, 260, 'allow').setScale(0.15).setInteractive();
-                denyLanding = this.add.image(320, 265, 'deny').setScale(0.15).setInteractive();
-            }
+                // helper that removes the UI
+                const clearDecisionUI = () => {
+                    textbox.destroy();
+                    allowLanding.destroy();
+                    denyLanding.destroy();
+                    header.destroy();
+                    body.destroy();
+                };
 
-            // helper that removes the UI
-            const clearDecisionUI = () => {
-                textbox.destroy();
-                allowLanding.destroy();
-                denyLanding.destroy();
-                header.destroy();
-                body.destroy();
-            };
+                // shared constants
+                const runwayX = 235;
+                const runwayY = 490;
+                const landingX = 760;
+                const landingY = 390;
+                const planeSpeed = 40;
 
-            // shared constants
-            const runwayX = 235;
-            const runwayY = 490;
-            const landingX = 760;
-            const landingY = 390;
-            const planeSpeed = 40;
+                // line plane up to runway and wait for plane to reach point
+                this.physics.moveTo(plane, runwayX, runwayY, planeSpeed);
+                const runwayAngle = Phaser.Math.Angle.Between(plane.x, plane.y, runwayX, runwayY) + Math.PI/2;
+                plane.setRotation(runwayAngle);
 
-            // line plane up to runway and wait for plane to reach point
-            this.physics.moveTo(plane, runwayX, runwayY, planeSpeed);
-            const runwayAngle = Phaser.Math.Angle.Between(plane.x, plane.y, runwayX, runwayY) + Math.PI/2;
-            plane.setRotation(runwayAngle);
+                const distanceToRunway = Phaser.Math.Distance.Between(plane.x, plane.y, runwayX, runwayY);
+                const travelTimeMs = (distanceToRunway / Math.max(planeSpeed, 1)) * 1000;
 
-            const distanceToRunway = Phaser.Math.Distance.Between(plane.x, plane.y, runwayX, runwayY);
-            const travelTimeMs = (distanceToRunway / Math.max(planeSpeed, 1)) * 1000;
-
-            this.time.delayedCall(Math.max(0, Math.round(travelTimeMs)), () => {
-                if (!plane.active) return;
-                this.physics.moveTo(plane, landingX, landingY, planeSpeed);
-                const landingAngle = Phaser.Math.Angle.Between(plane.x, plane.y, landingX, landingY) + Math.PI/2;
-                plane.setRotation(landingAngle);
-
-                const distanceToLanding = Phaser.Math.Distance.Between(plane.x, plane.y, landingX, landingY);
-                const landingTimeMs = (distanceToLanding / Math.max(planeSpeed, 1)) * 1000;
-
-                this.time.delayedCall(Math.max(0, Math.round(landingTimeMs)), () => {
+                this.time.delayedCall(Math.max(0, Math.round(travelTimeMs)), () => {
                     if (!plane.active) return;
-                    if (plane.body) {
-                        plane.body.velocity.x = 0;
-                        plane.body.velocity.y = 0;
-                        plane.body.moves = false;
-                    }
-                    plane.setPosition(landingX, landingY);
+                    this.physics.moveTo(plane, landingX, landingY, planeSpeed);
+                    const landingAngle = Phaser.Math.Angle.Between(plane.x, plane.y, landingX, landingY) + Math.PI/2;
+                    plane.setRotation(landingAngle);
 
-                    this.time.delayedCall(5000, () => {
-                        if (plane.active) {
-                            // increment successful landing counter only when plane was cleared and solution is 'clear'
-                            if (cleared && plane_selection["solution"] === "clear") {
-                                this.successfulDecisions++;
-                                if (this.landedCounterText) {
-                                    this.landedCounterText.setText(`Successful decisions: ${this.successfulDecisions}`);
-                                }
-                            }
+                    const distanceToLanding = Phaser.Math.Distance.Between(plane.x, plane.y, landingX, landingY);
+                    const landingTimeMs = (distanceToLanding / Math.max(planeSpeed, 1)) * 1000;
 
-                            plane.destroy();
-                            if (plane_selection["solution"] == "denied") {
-                                this.scene.start('GameOver');
-                            }
-                            if (!cleared) {
-                                this.scene.start('GameOver');
-                            }
-                            cleared = false;
+                    this.time.delayedCall(Math.max(0, Math.round(landingTimeMs)), () => {
+                        if (!plane.active) return;
+                        if (plane.body) {
+                            plane.body.velocity.x = 0;
+                            plane.body.velocity.y = 0;
+                            plane.body.moves = false;
                         }
+                        plane.setPosition(landingX, landingY);
+
+                        if (plane_selection["solution"] == "denied") {
+                            this.scene.start('GameOver');
+                        }
+                        if (!cleared) {
+                            this.scene.start('GameOver');
+                        }
+                        cleared = false;
+
+                        this.time.delayedCall(5000, () => {
+                            if (plane.active) {
+                                // increment successful landing counter only when plane was cleared and solution is 'clear'
+                                if (cleared && plane_selection["solution"] === "clear") {
+                                    this.successfulDecisions++;
+                                    if (this.landedCounterText) {
+                                        this.landedCounterText.setText(`Successful decisions: ${this.successfulDecisions}`);
+                                    }
+                                }
+
+                                plane.destroy();
+                            }
+                        }, [], this);
                     }, [], this);
                 }, [], this);
-            }, [], this);
 
-            allowLanding.on('pointerdown', () => {
-                clearDecisionUI();
+                allowLanding.on('pointerdown', () => {
+                    clearDecisionUI();
 
-                // free spawn side for a new aircraft
-                if (point.x === 0) {
-                    this.leftSide = false;
-                } else {
-                    this.rightSide = false;
-                }
-
-                cleared = true;
-
-            });
-
-            denyLanding.on('pointerdown', () => {
-                clearDecisionUI();
-
-                // send plane off screen
-                const offscreenX = point.x === 0 ? -2000 : 3000;
-                const offscreenY = point.y + Phaser.Math.Between(-200, 200);
-                const turnAngle = Phaser.Math.Angle.Between(plane.x, plane.y, offscreenX, offscreenY) + Math.PI / 2;
-                plane.setRotation(turnAngle);
-                this.physics.moveTo(plane, offscreenX, offscreenY, planeSpeed);
-
-                // free spawn side for a new aircraft
-                if (point.x === 0) {
-                    this.leftSide = false;
-                } else {
-                    this.rightSide = false;
-                }
-
-                this.time.delayedCall(3000, () => {
-                    plane.destroy();
-                    if (plane_selection["solution"] == "clear") {
-                        this.scene.start('GameOver');
+                    // free spawn side for a new aircraft
+                    if (point.x === 0) {
+                        this.leftSide = false;
+                    } else {
+                        this.rightSide = false;
                     }
 
-                    this.successfulDecisions++;
-                    if (this.landedCounterText) {
-                        this.landedCounterText.setText(`Successful decisions: ${this.successfulDecisions}`);
-                    }
-                }, [], this);
-            });
+                    cleared = true;
 
+                });
+
+                denyLanding.on('pointerdown', () => {
+                    clearDecisionUI();
+
+                    // send plane off screen
+                    const offscreenX = point.x === 0 ? -2000 : 3000;
+                    const offscreenY = point.y + Phaser.Math.Between(-200, 200);
+                    const turnAngle = Phaser.Math.Angle.Between(plane.x, plane.y, offscreenX, offscreenY) + Math.PI / 2;
+                    plane.setRotation(turnAngle);
+                    this.physics.moveTo(plane, offscreenX, offscreenY, planeSpeed);
+
+                    // free spawn side for a new aircraft
+                    if (point.x === 0) {
+                        this.leftSide = false;
+                    } else {
+                        this.rightSide = false;
+                    }
+
+                    this.time.delayedCall(3000, () => {
+                        plane.destroy();
+                        if (plane_selection["solution"] == "clear") {
+                            this.scene.start('GameOver');
+                        }
+
+                        this.successfulDecisions++;
+                        if (this.landedCounterText) {
+                            this.landedCounterText.setText(`Successful decisions: ${this.successfulDecisions}`);
+                        }
+                    }, [], this);
+                });
+            }
         }
 
         this.time.addEvent({

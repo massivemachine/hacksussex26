@@ -17,12 +17,43 @@ export class Game extends Scene
 
     create ()
     {
-        const background = this.add.sprite(650, 375, 'gatwick_background');
+        const background = this.physics.add.sprite(650, 375, 'gatwick_background');
         const monitor = this.add.image(650, 383, 'monitor');
 
         background.setDisplaySize(1240, 705);
         monitor.setDisplaySize(1305, 780);
-        monitor.setDepth(100);
+        monitor.setDepth(90);
+
+        // notes logic
+        const notes = this.add.sprite(250, 1020, 'notes').setScale(0.25).setInteractive();
+        notes.setDepth(100);
+
+        notes.on('pointerover', () => {
+            this.tweens.add({
+                targets: notes,
+                y: 1000,
+                duration: 200,
+                ease: 'Back'
+            });
+        });
+
+        notes.on('pointerout', () => {
+            this.tweens.add({
+                targets: notes,
+                y: 1020,
+                duration: 200,
+                ease: 'Back'
+            });
+        });
+
+        notes.on('pointerdown', () => {
+            this.tweens.add({
+                targets: notes,
+                y: 500,
+                duration: 200,
+                ease: 'Back'
+            });
+        });
 
         // exit button logic
         const exitButton = this.add.text(1200, 675, 'X', {

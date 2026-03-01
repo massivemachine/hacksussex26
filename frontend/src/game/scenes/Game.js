@@ -97,8 +97,8 @@ export class Game extends Scene
         */
 
         // Successful landing counter
-        this.successfulLandings = 0;
-        this.landedCounterText = this.add.text(650, 730, `Successful landings: ${this.successfulLandings}`, {
+        this.successfulDecisions = 0;
+        this.landedCounterText = this.add.text(650, 710, `Successful decisions: ${this.successfulDecisions}`, {
             fontFamily: 'Arial', fontSize: 20, color: 'white'
         }).setOrigin(0.5);
         this.landedCounterText.setDepth(100);
@@ -298,9 +298,9 @@ export class Game extends Scene
                         if (plane.active) {
                             // increment successful landing counter only when plane was cleared and solution is 'clear'
                             if (cleared && plane_selection["solution"] === "clear") {
-                                this.successfulLandings++;
+                                this.successfulDecisions++;
                                 if (this.landedCounterText) {
-                                    this.landedCounterText.setText(`Successful landings: ${this.successfulLandings}`);
+                                    this.landedCounterText.setText(`Successful decisions: ${this.successfulDecisions}`);
                                 }
                             }
 
@@ -352,6 +352,11 @@ export class Game extends Scene
                     plane.destroy();
                     if (plane_selection["solution"] == "clear") {
                         this.scene.start('GameOver');
+                    }
+
+                    this.successfulDecisions++;
+                    if (this.landedCounterText) {
+                        this.landedCounterText.setText(`Successful decisions: ${this.successfulDecisions}`);
                     }
                 }, [], this);
             });
